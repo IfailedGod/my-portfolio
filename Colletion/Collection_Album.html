@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jaime's Collection Album</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --text: #1a1a1a;
+      --card: #ffffff;
+      --shadow: rgba(0,0,0,0.08);
+      --accent: #6366f1;
+      --accent-dark: #4f46e5;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --card: #1e293b;
+      --shadow: rgba(0,0,0,0.4);
+      --accent: #a5b4fc;
+      --accent-dark: #818cf8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--card);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: all 0.3s;
+      z-index: 100;
+    }
+
+    /* NEW: Back button styling */
+    .back-btn {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: var(--card);
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      padding: 0.8rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .back-btn:active {
+      transform: translateY(0);
+    }
+
+    .gallery {
+      columns: 320px 4;
+      column-gap: 1.2rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1.2rem;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--card);
+      box-shadow: 0 8px 24px var(--shadow);
+      transition: all 0.35s ease;
+      loading: lazy;
+      break-inside: avoid;
+      display: block;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.04);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25),
+                  0 0 0 4px rgba(99,102,241,0.2);
+      z-index: 2;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .gallery {
+        columns: 320px 3;
+      }
+      .back-btn, .theme-toggle {
+        top: 1rem;
+      }
+      .back-btn {
+        left: 1rem;
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery {
+        columns: 100%;
+      }
+      h1 {
+        font-size: 2.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NEW: Back to collection button -->
+  <a href="collection.html" class="back-btn">← Back to Main Collection</a>
+
+  <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+
+  <header>
+    <h1>Jazz's Collection</h1>
+    <p style="font-size:1.2rem; opacity:0.9;">Moments • Memories • Good Vibes</p>
+  </header>
+
+  <div class="gallery">
+    <img src="img (1).jpg"  alt="Collection photo 1"  loading="lazy">
+    <img src="img (2).jpg"  alt="Collection photo 2"  loading="lazy">
+    <img src="img (3).jpg"  alt="Collection photo 3"  loading="lazy">
+    <img src="img (4).jpg"  alt="Collection photo 4"  loading="lazy">
+    <img src="img (5).jpg"  alt="Collection photo 5"  loading="lazy">
+    <img src="img (6).jpg"  alt="Collection photo 6"  loading="lazy">
+    <img src="img (7).jpg"  alt="Collection photo 7"  loading="lazy">
+    <img src="img (8).jpg"  alt="Collection photo 8"  loading="lazy">
+    <img src="img (9).jpg"  alt="Collection photo 9"  loading="lazy">
+    <img src="img (10).jpg" alt="Collection photo 10" loading="lazy">
+    <img src="img (11).jpg" alt="Collection photo 11" loading="lazy">
+    <img src="img (12).jpg" alt="Collection photo 12" loading="lazy">
+    <img src="img (13).jpg" alt="Collection photo 13" loading="lazy">
+    <img src="img (14).jpg" alt="Collection photo 14" loading="lazy">
+    <img src="img (15).jpg" alt="Collection photo 15" loading="lazy">
+    <img src="img (16).jpg" alt="Collection photo 16" loading="lazy">
+    <img src="img (17).jpg" alt="Collection photo 17" loading="lazy">
+    <img src="img (18).jpg" alt="Collection photo 18" loading="lazy">
+    <img src="img (19).jpg" alt="Collection photo 19" loading="lazy">
+    <img src="img (20).jpg" alt="Collection photo 20" loading="lazy">
+    <img src="img (21).jpg" alt="Collection photo 21" loading="lazy">
+  </div>
+
+  <footer>
+    <p>© 2026 • Made with ❤️ in Quezon City</p>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+
+    if (localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.setAttribute('data-theme', 'dark');
+      toggle.textContent = '☀️';
+    }
+
+    toggle.addEventListener('click', () => {
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        toggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        toggle.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+
+</body>
+</html>

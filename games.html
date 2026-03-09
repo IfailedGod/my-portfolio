@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quirino High School - Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+
+        body.dark-mode {
+            background: #1a1a1a;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-mode .container {
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #800000;
+            padding-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        body.dark-mode .header {
+            border-bottom-color: #ffd700;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+            transition: color 0.3s;
+        }
+
+        body.dark-mode .header h1 {
+            color: #ffd700;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-info p {
+            color: #666;
+            margin-bottom: 5px;
+            transition: color 0.3s;
+        }
+
+        body.dark-mode .user-info p {
+            color: #b0b0b0;
+        }
+
+        .logout-btn, .back-btn {
+            background: #d32f2f;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+
+        .logout-btn:hover, .back-btn:hover {
+            background: #b71c1c;
+        }
+
+        .secret-btn {
+            background: transparent;
+            color: #800000;
+            padding: 8px 12px;
+            border: 1px solid #800000;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+
+        .secret-btn:hover {
+            background: #800000;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .games-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(128, 0, 0, 0.4);
+        }
+
+        .game-emoji {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .game-section {
+            display: none;
+        }
+
+        .game-section.active {
+            display: block;
+        }
+
+        .game-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Code Guessing Game */
+        .code-challenge {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .code-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .code-option {
+            background: white;
+            border: 2px solid #800000;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .code-option:hover {
+            background: #800000;
+            color: white;
+        }
+
+        .code-option.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .code-option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        /* Memory Game */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            font-size: 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            pointer-events: none;
+        }
+
+        /* Trivia Game */
+        .trivia-question {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .trivia-question h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .trivia-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .trivia-option {
+            background: white;
+            border: 2px solid #800000;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .trivia-option:hover {
+            background: #800000;
+            color: white;
+        }
+
+        .trivia-option.selected {
+            background: #800000;
+            color: white;
+        }
+
+        /* Drag & Drop */
+        .drag-drop-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .drag-items {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px dashed #800000;
+        }
+
+        .drag-targets {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px dashed #800000;
+        }
+
+        .drag-item {
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: grab;
+            transition: all 0.3s;
+        }
+
+        .drag-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(128, 0, 0, 0.3);
+        }
+
+        .drag-target {
+            background: white;
+            border: 2px solid #800000;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            transition: all 0.3s;
+        }
+
+        .drag-target.active {
+            background: #fff9e6;
+            border-color: #ffd700;
+        }
+
+        .drag-target.filled {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #333;
+        }
+
+        .game-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .game-btn {
+            padding: 12px 30px;
+            background: #800000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .game-btn:hover {
+            background: #600000;
+        }
+
+        .game-btn.secondary {
+            background: #999;
+        }
+
+        .game-btn.secondary:hover {
+            background: #666;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #800000;
+            margin: 20px 0;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 18px;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .message.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .user-info {
+                text-align: left;
+            }
+
+            .games-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .drag-drop-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>� Quirino High School - Games</h1>
+            <div class="user-info">
+                <p>Welcome, <span id="userName">Guest</span>!</p>
+                <button class="back-btn" onclick="backToDashboard()">← Back</button>
+                <button class="secret-btn" onclick="accessSecret()" title="My Profile">👤</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Games Menu -->
+        <div id="gamesMenu">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="color: #333; margin-bottom: 10px;">Choose a Game</h2>
+                <p style="color: #666;">Test your ICT knowledge with these interactive games!</p>
+            </div>
+            <div class="games-menu">
+                <button class="game-card" onclick="showGame('codeGuessing')">
+                    <div class="game-emoji">💻</div>
+                    Code Guessing
+                </button>
+                <button class="game-card" onclick="showGame('memory')">
+                    <div class="game-emoji">🧠</div>
+                    Memory Match
+                </button>
+                <button class="game-card" onclick="showGame('trivia')">
+                    <div class="game-emoji">❓</div>
+                    Tech Trivia
+                </button>
+                <button class="game-card" onclick="showGame('dragDrop')">
+                    <div class="game-emoji">🎯</div>
+                    Drag & Drop
+                </button>
+            </div>
+        </div>
+
+        <!-- Code Guessing Game -->
+        <div id="codeGuessing" class="game-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="game-title">💻 Code Guessing</h2>
+                <button class="game-btn secondary" onclick="backToMenu()">← Back</button>
+            </div>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">Guess what the code outputs!</p>
+            <div id="codeGameContent"></div>
+        </div>
+
+        <!-- Memory Game -->
+        <div id="memory" class="game-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="game-title">🧠 Memory Match</h2>
+                <button class="game-btn secondary" onclick="backToMenu()">← Back</button>
+            </div>
+            <p style="text-align: center; color: #666; margin-bottom: 10px;">Match pairs of ICT terms!</p>
+            <div class="score-display">Matches: <span id="memoryScore">0</span>/8</div>
+            <div class="memory-grid" id="memoryGrid"></div>
+            <div class="game-buttons">
+                <button class="game-btn" onclick="resetMemoryGame()">Reset Game</button>
+            </div>
+        </div>
+
+        <!-- Trivia Game -->
+        <div id="trivia" class="game-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="game-title">❓ Tech Trivia</h2>
+                <button class="game-btn secondary" onclick="backToMenu()">← Back</button>
+            </div>
+            <div class="score-display">Score: <span id="triviaScore">0</span>/10</div>
+            <div id="triviaContent"></div>
+        </div>
+
+        <!-- Drag & Drop Game -->
+        <div id="dragDrop" class="game-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="game-title">🎯 Drag & Drop Matching</h2>
+                <button class="game-btn secondary" onclick="backToMenu()">← Back</button>
+            </div>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">Drag terms to their correct definitions!</p>
+            <div class="drag-drop-container">
+                <div>
+                    <h3 style="margin-bottom: 10px;">Terms</h3>
+                    <div id="dragItems"></div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 10px;">Definitions</h3>
+                    <div id="dragTargets"></div>
+                </div>
+            </div>
+            <div class="game-buttons">
+                <button class="game-btn" onclick="checkDragDrop()">Check Answers</button>
+                <button class="game-btn secondary" onclick="resetDragDrop()">Reset</button>
+            </div>
+            <div id="dragDropMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+
+        window.addEventListener('load', function() {
+            checkLogin();
+            updateUserInfo();
+        });
+
+        function checkLogin() {
+            const user = localStorage.getItem('currentUser');
+            if (!user) {
+                alert('You must be logged in to play games');
+                window.location.href = 'login.html';
+                return false;
+            }
+            currentUser = JSON.parse(user);
+            return true;
+        }
+
+        function updateUserInfo() {
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+            }
+        }
+
+        function backToDashboard() {
+            window.location.href = 'quiz.html';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        function accessSecret() {
+            if (!currentUser) {
+                alert('You must be logged in to access your profile');
+                return;
+            }
+            window.location.href = 'profile.html';
+        }
+
+        function showGame(gameId) {
+            document.getElementById('gamesMenu').style.display = 'none';
+            document.querySelectorAll('.game-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(gameId).classList.add('active');
+
+            if (gameId === 'codeGuessing') initCodeGuessing();
+            else if (gameId === 'memory') initMemoryGame();
+            else if (gameId === 'trivia') initTrivia();
+            else if (gameId === 'dragDrop') initDragDrop();
+        }
+
+        function backToMenu() {
+            document.getElementById('gamesMenu').style.display = 'block';
+            document.querySelectorAll('.game-section').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+
+        // =================
+        // CODE GUESSING GAME
+        // =================
+        const codeProblems = [
+            {
+                code: `var x = 5;
+var y = 10;
+console.log(x + y);`,
+                options: ['5', '15', '10', '510'],
+                correct: 1
+            },
+            {
+                code: `var text = "Hello";
+console.log(text.length);`,
+                options: ['4', '6', '5', 'Hello'],
+                correct: 2
+            },
+            {
+                code: `var arr = [1, 2, 3, 4];
+console.log(arr[2]);`,
+                options: ['1', '2', '3', '4'],
+                correct: 2
+            },
+            {
+                code: `var num = 10 % 3;
+console.log(num);`,
+                options: ['3', '1', '10', '13'],
+                correct: 1
+            },
+            {
+                code: `var result = true && false;
+console.log(result);`,
+                options: ['true', 'false', 'undefined', '0'],
+                correct: 1
+            }
+        ];
+
+        let codeProblemIndex = 0;
+        let codeScore = 0;
+
+        function initCodeGuessing() {
+            codeProblemIndex = 0;
+            codeScore = 0;
+            showCodeProblem();
+        }
+
+        function showCodeProblem() {
+            if (codeProblemIndex >= codeProblems.length) {
+                document.getElementById('codeGameContent').innerHTML = `
+                    <div class="message success">
+                        <h3>🎉 Game Complete!</h3>
+                        <p>Score: ${codeScore}/${codeProblems.length}</p>
+                    </div>
+                    <div class="game-buttons">
+                        <button class="game-btn" onclick="initCodeGuessing()">Play Again</button>
+                        <button class="game-btn secondary" onclick="backToMenu()">Back to Menu</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const problem = codeProblems[codeProblemIndex];
+            let html = `<div class="code-challenge">
+                <p><strong>Question ${codeProblemIndex + 1} of ${codeProblems.length}</strong></p>
+                <p style="margin-top: 10px; margin-bottom: 10px;">What does this code output?</p>
+                <div class="code-block">${problem.code}</div>
+                <div class="code-options">`;
+            
+            problem.options.forEach((option, index) => {
+                html += `<button class="code-option" onclick="checkCodeAnswer(${index})">${option}</button>`;
+            });
+            
+            html += `</div></div>`;
+            document.getElementById('codeGameContent').innerHTML = html;
+        }
+
+        function checkCodeAnswer(index) {
+            const problem = codeProblems[codeProblemIndex];
+            const buttons = document.querySelectorAll('.code-option');
+            
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (index === problem.correct) {
+                codeScore++;
+                buttons[index].classList.add('correct');
+            } else {
+                buttons[index].classList.add('incorrect');
+                buttons[problem.correct].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                codeProblemIndex++;
+                showCodeProblem();
+            }, 1500);
+        }
+
+        // =================
+        // MEMORY GAME
+        // =================
+        const memoryPairs = [
+            { emoji: '💾', label: 'Storage' },
+            { emoji: '🖥️', label: 'Desktop' },
+            { emoji: '⌨️', label: 'Keyboard' },
+            { emoji: '🖱️', label: 'Mouse' },
+            { emoji: '📡', label: 'Network' },
+            { emoji: '🔐', label: 'Security' },
+            { emoji: '💿', label: 'CD/DVD' },
+            { emoji: '🌐', label: 'Internet' }
+        ];
+
+        let memoryCards = [];
+        let memoryFlipped = [];
+        let memoryMatched = [];
+        let memoryScore = 0;
+
+        function initMemoryGame() {
+            memoryCards = [];
+            memoryFlipped = [];
+            memoryMatched = [];
+            memoryScore = 0;
+
+            const shuffled = [...memoryPairs, ...memoryPairs].sort(() => Math.random() - 0.5);
+            
+            let html = '';
+            shuffled.forEach((item, index) => {
+                memoryCards.push(item);
+                html += `<button class="memory-card" onclick="flipMemoryCard(${index})" id="card-${index}">?</button>`;
+            });
+
+            document.getElementById('memoryGrid').innerHTML = html;
+            document.getElementById('memoryScore').textContent = '0';
+        }
+
+        function flipMemoryCard(index) {
+            if (memoryFlipped.length < 2 && !memoryFlipped.includes(index) && !memoryMatched.includes(index)) {
+                memoryFlipped.push(index);
+                document.getElementById(`card-${index}`).textContent = memoryCards[index].emoji;
+                document.getElementById(`card-${index}`).classList.add('flipped');
+
+                if (memoryFlipped.length === 2) {
+                    setTimeout(checkMemoryMatch, 600);
+                }
+            }
+        }
+
+        function checkMemoryMatch() {
+            const [index1, index2] = memoryFlipped;
+            if (memoryCards[index1].label === memoryCards[index2].label) {
+                memoryMatched.push(index1, index2);
+                memoryScore++;
+                document.getElementById('memoryScore').textContent = memoryScore;
+                memoryFlipped = [];
+
+                if (memoryMatched.length === memoryCards.length) {
+                    setTimeout(() => {
+                        alert(`🎉 You Won! Matched all ${memoryScore} pairs!`);
+                    }, 300);
+                }
+            } else {
+                document.getElementById(`card-${index1}`).textContent = '?';
+                document.getElementById(`card-${index1}`).classList.remove('flipped');
+                document.getElementById(`card-${index2}`).textContent = '?';
+                document.getElementById(`card-${index2}`).classList.remove('flipped');
+                memoryFlipped = [];
+            }
+        }
+
+        function resetMemoryGame() {
+            initMemoryGame();
+        }
+
+        // =================
+        // TRIVIA GAME
+        // =================
+        const triviaQuestions = [
+            {
+                question: 'What does CPU stand for?',
+                options: ['Central Process Unit', 'Central Processing Unit', 'Computer Personal Unit', 'Central Processor Utility'],
+                correct: 1
+            },
+            {
+                question: 'What is the smallest unit of data?',
+                options: ['Byte', 'Kilobyte', 'Bit', 'Megabyte'],
+                correct: 2
+            },
+            {
+                question: 'What is RAM used for?',
+                options: ['Permanent storage', 'Temporary memory', 'Display output', 'Audio processing'],
+                correct: 1
+            },
+            {
+                question: 'What does HTTP stand for?',
+                options: ['Hyper Text Transfer Protocol', 'High Technology Transfer Process', 'Home Telnet Transfer Protocol', 'Hyperlinks and Transfer Protocol'],
+                correct: 0
+            },
+            {
+                question: 'What is a router used for?',
+                options: ['Store files', 'Connect networks', 'Display graphics', 'Process audio'],
+                correct: 1
+            },
+            {
+                question: 'What is malware?',
+                options: ['Good software', 'Harmful software', 'Temporary files', 'System updates'],
+                correct: 1
+            },
+            {
+                question: 'What is an IP address?',
+                options: ['Internet Processing', 'Internet Protocol address', 'Internet Provider', 'Internal Processor'],
+                correct: 1
+            },
+            {
+                question: 'What is a firewall?',
+                options: ['Physical wall', 'Extra RAM', 'Security system', 'Network cable'],
+                correct: 2
+            },
+            {
+                question: 'What is bandwidth?',
+                options: ['Width of cables', 'Data transfer rate', 'Memory size', 'Screen resolution'],
+                correct: 1
+            },
+            {
+                question: 'What is encryption?',
+                options: ['File compression', 'Data security method', 'Backup system', 'Network speed'],
+                correct: 1
+            }
+        ];
+
+        let triviaIndex = 0;
+        let triviaScore = 0;
+
+        function initTrivia() {
+            triviaIndex = 0;
+            triviaScore = 0;
+            showTriviaQuestion();
+        }
+
+        function showTriviaQuestion() {
+            if (triviaIndex >= triviaQuestions.length) {
+                document.getElementById('triviaContent').innerHTML = `
+                    <div class="message success">
+                        <h3>🎉 Quiz Complete!</h3>
+                        <p>Score: ${triviaScore}/${triviaQuestions.length}</p>
+                    </div>
+                    <div class="game-buttons">
+                        <button class="game-btn" onclick="initTrivia()">Play Again</button>
+                        <button class="game-btn secondary" onclick="backToMenu()">Back to Menu</button>
+                    </div>
+                `;
+                document.getElementById('triviaScore').textContent = triviaScore;
+                return;
+            }
+
+            const q = triviaQuestions[triviaIndex];
+            let html = `<div class="trivia-question">
+                <h3>Question ${triviaIndex + 1}: ${q.question}</h3>
+                <div class="trivia-options">`;
+            
+            q.options.forEach((option, index) => {
+                html += `<button class="trivia-option" onclick="checkTriviaAnswer(${index})">${option}</button>`;
+            });
+            
+            html += `</div></div>`;
+            document.getElementById('triviaContent').innerHTML = html;
+        }
+
+        function checkTriviaAnswer(index) {
+            const q = triviaQuestions[triviaIndex];
+            const buttons = document.querySelectorAll('.trivia-option');
+            
+            buttons.forEach(btn => btn.onclick = null);
+            
+            if (index === q.correct) {
+                triviaScore++;
+                buttons[index].classList.add('selected');
+                buttons[index].style.background = '#4caf50';
+                buttons[index].style.borderColor = '#4caf50';
+            } else {
+                buttons[index].style.background = '#f44336';
+                buttons[index].style.borderColor = '#f44336';
+                buttons[index].style.color = 'white';
+                buttons[q.correct].classList.add('selected');
+                buttons[q.correct].style.background = '#4caf50';
+                buttons[q.correct].style.borderColor = '#4caf50';
+            }
+
+            document.getElementById('triviaScore').textContent = triviaScore;
+
+            setTimeout(() => {
+                triviaIndex++;
+                showTriviaQuestion();
+            }, 1500);
+        }
+
+        // =================
+        // DRAG & DROP GAME
+        // =================
+        const dragDropPairs = [
+            { term: 'RAM', definition: 'Temporary memory for running programs' },
+            { term: 'CPU', definition: 'Brain of the computer' },
+            { term: 'GPU', definition: 'Processes graphics' },
+            { term: 'SSD', definition: 'Fast storage device' },
+            { term: 'DNS', definition: 'Translates domain names to IP addresses' }
+        ];
+
+        let dragDropMatches = {};
+
+        function initDragDrop() {
+            dragDropMatches = {};
+            const shuffled = [...dragDropPairs].sort(() => Math.random() - 0.5);
+
+            let itemsHtml = '';
+            dragDropPairs.forEach((pair, index) => {
+                itemsHtml += `<div class="drag-item" draggable="true" ondragstart="dragStart(event)" data-term="${pair.term}">${pair.term}</div>`;
+            });
+            document.getElementById('dragItems').innerHTML = itemsHtml;
+
+            let targetsHtml = '';
+            shuffled.forEach((pair) => {
+                targetsHtml += `<div class="drag-target" ondrop="dragDrop(event)" ondragover="dragOver(event)" data-definition="${pair.definition}">${pair.definition}</div>`;
+            });
+            document.getElementById('dragTargets').innerHTML = targetsHtml;
+            document.getElementById('dragDropMessage').innerHTML = '';
+        }
+
+        function dragStart(event) {
+            event.dataTransfer.setData('term', event.target.dataset.term);
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+            event.target.classList.add('active');
+        }
+
+        function dragDrop(event) {
+            event.preventDefault();
+            const term = event.dataTransfer.getData('term');
+            const target = event.target;
+            
+            target.classList.remove('active');
+            target.textContent = term;
+            target.classList.add('filled');
+            dragDropMatches[target.dataset.definition] = term;
+        }
+
+        function checkDragDrop() {
+            let correct = 0;
+            dragDropPairs.forEach(pair => {
+                Object.entries(dragDropMatches).forEach(([def, term]) => {
+                    if (term === pair.term && def === pair.definition) {
+                        correct++;
+                    }
+                });
+            });
+
+            const message = document.getElementById('dragDropMessage');
+            if (correct === dragDropPairs.length) {
+                message.innerHTML = `<div class="message success">🎉 Perfect Match! All ${correct} correct!</div>`;
+            } else {
+                message.innerHTML = `<div class="message error">Score: ${correct}/${dragDropPairs.length}</div>`;
+            }
+        }
+
+        function resetDragDrop() {
+            initDragDrop();
+        }
+
+        function toggleTheme() {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            localStorage.setItem('darkMode', String(!isDark));
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Apply saved theme immediately on page load
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>

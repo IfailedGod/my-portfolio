@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jaime's School Life • Reflections</title>
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #f0f4ff 0%, #e6f0fa 50%, #f8f1ff 100%);
+      --card: #ffffff;
+      --accent: #6b7280;
+      --text: #1e293b;
+      --shadow: rgba(0, 0, 0, 0.08);
+      --glow: rgba(99, 102, 241, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 0.5rem;
+    }
+
+    .polaroid-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 4rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .polaroid {
+      background: white;
+      padding: 1rem 1rem 2.5rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px var(--shadow);
+      transform: rotate(0deg);
+      transition: all 0.4s ease;
+      width: 240px;
+      text-align: center;
+      position: relative;
+    }
+
+    .polaroid:nth-child(odd)  { transform: rotate(-3deg); }
+    .polaroid:nth-child(even) { transform: rotate(4deg); }
+
+    .polaroid:hover {
+      transform: rotate(0deg) translateY(-12px) scale(1.08);
+      box-shadow: 0 20px 50px var(--shadow), 0 0 0 6px var(--glow);
+      z-index: 2;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .caption {
+      font-size: 0.9rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px var(--shadow);
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: #334155;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.8rem;
+      background: #6366f1;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #4f46e5;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .polaroid-gallery { gap: 1.5rem; }
+      .polaroid { width: 200px; }
+      main { padding: 1.8rem; }
+      h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Jaime's School Life</h1>
+    <p style="font-size:1.2rem; color:#64748b; max-width:600px; margin:0 auto;">
+      A quiet journey of growth, friends, and finding my voice
+    </p>
+  </header>
+
+  <div class="polaroid-gallery">
+    <div class="polaroid">
+      <img src="img (8).jpg" alt="School memory 1" loading="lazy">
+      <div class="caption">Quiet corners I loved also quiet a baddass earings.</div>
+    </div>
+    <div class="polaroid">
+      <img src="img (3).jpg" alt="School memory 2" loading="lazy">
+      <div class="caption">Friends who changed everything</div>
+    </div>
+    <div class="polaroid">
+      <img src="img (15).jpg" alt="School memory 3" loading="lazy">
+      <div class="caption">Bros blushingggg</div>
+    </div>
+  </div>
+
+  <main>
+    <p>I was never bullied in school, although like many students, I experienced a few occasional insults. These moments didn’t affect me deeply, but they added to my natural shyness. I often preferred staying in the background rather than drawing attention to myself.</p>
+
+    <p>In Years 8 and 9, I struggled with public speaking because of anxiety and fear of embarrassment. I constantly worried that making mistakes during presentations or giving the wrong answer would lead to judgment from others. This fear made it difficult for me to express my ideas confidently in class.</p>
+
+    <p>By Year 10, I began to build my confidence after realising the importance of personal growth for my future. I felt more comfortable in my own skin thanks to the friends I had made along the way. Their support helped me face challenges with less fear and more courage.</p>
+
+    <a href="Education_Album.html" class="back-btn">See More Pictures →</a>
+  </main>
+
+</body>
+</html>

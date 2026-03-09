@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quirino High School - Quiz Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+
+        body.dark-mode {
+            background: #1a1a1a;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-mode .container {
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #800000;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-info p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .logout-btn {
+            background: #d32f2f;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #b71c1c;
+        }
+
+        .secret-btn {
+            background: transparent;
+            color: #800000;
+            padding: 8px 12px;
+            border: 1px solid #800000;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+
+        .secret-btn:hover {
+            background: #800000;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .quiz-select {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .quiz-option {
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .quiz-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(128, 0, 0, 0.4);
+        }
+
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .progress-bar-bg {
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #800000 0%, #000000 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-container {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-label:hover {
+            background: #f0f0f0;
+            border-color: #800000;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 15px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .option-label input[type="radio"]:checked + span {
+            color: #800000;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .prev-btn {
+            background: #999;
+            color: white;
+        }
+
+        .prev-btn:hover:not(:disabled) {
+            background: #666;
+            transform: translateY(-2px);
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .submit-btn {
+            background: #388e3c;
+            color: white;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #2e7d32;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+        }
+
+        .results-container.active {
+            display: block !important;
+        }
+
+        .results-container h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #800000;
+            margin: 20px 0;
+        }
+
+        .results-details {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .results-details p {
+            font-size: 18px;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .results-button {
+            background: #800000;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .results-button:hover {
+            background: #600000;
+        }
+
+        .results-button.secondary {
+            background: #999;
+            margin-left: 10px;
+        }
+
+        .results-button.secondary:hover {
+            background: #666;
+        }
+
+        #quizDetailsContainer {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 800px;
+            overflow-y: auto;
+            border-left: 5px solid #800000;
+        }
+
+        #detailsList {
+            margin-bottom: 20px;
+        }
+
+        #detailsList h4 {
+            color: #800000;
+            margin-bottom: 10px;
+        }
+
+        .no-login {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .no-login h2 {
+            color: #d32f2f;
+            margin-bottom: 20px;
+        }
+
+        .no-login a {
+            display: inline-block;
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .quiz-intro {
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .quiz-intro.active {
+            display: block;
+        }
+
+        .quiz-intro h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .quiz-intro p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .dashboard {
+            display: block;
+        }
+
+        .dashboard.hidden {
+            display: none;
+        }
+
+        .profile-banner {
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .profile-banner h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .profile-banner p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .dashboard-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-btn {
+            background: white;
+            border: 2px solid #800000;
+            color: #800000;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .dashboard-btn:hover {
+            background: #800000;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(128, 0, 0, 0.3);
+        }
+
+        /* ===== DARK MODE STYLING ===== */
+        body.dark-mode .header {
+            border-bottom-color: #ffd700;
+        }
+
+        body.dark-mode .header h1 {
+            color: #ffd700;
+        }
+
+        body.dark-mode .user-info p {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .quiz-select {
+            gap: 15px;
+        }
+
+        body.dark-mode .quiz-option {
+            background: linear-gradient(135deg, #b8860b 0%, #333333 100%);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        body.dark-mode .quiz-option:hover {
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        body.dark-mode .progress-info {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .progress-bar-bg {
+            background: #444;
+        }
+
+        body.dark-mode .question-container {
+            background: #333;
+        }
+
+        body.dark-mode .question-title {
+            color: #ffd700;
+        }
+
+        body.dark-mode .option-label {
+            background: #3a3a3a;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .option-label:hover {
+            background: #444;
+            border-color: #ffd700;
+        }
+
+        body.dark-mode .option-label input[type="radio"]:checked + span {
+            color: #ffd700;
+        }
+
+        body.dark-mode .prev-btn {
+            background: #555;
+        }
+
+        body.dark-mode .prev-btn:hover:not(:disabled) {
+            background: #777;
+        }
+
+        body.dark-mode .next-btn {
+            background: linear-gradient(135deg, #b8860b 0%, #555555 100%);
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.2);
+        }
+
+        body.dark-mode .next-btn:hover:not(:disabled) {
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        body.dark-mode .results-container h2 {
+            color: #ffd700;
+        }
+
+        body.dark-mode .score-display {
+            color: #ffd700;
+        }
+
+        body.dark-mode .results-details {
+            background: #333;
+        }
+
+        body.dark-mode .results-details p {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .results-button {
+            background: #b8860b;
+            color: white;
+        }
+
+        body.dark-mode .results-button:hover {
+            background: #d4a000;
+        }
+
+        body.dark-mode .results-button.secondary {
+            background: #555;
+        }
+
+        body.dark-mode .results-button.secondary:hover {
+            background: #777;
+        }
+
+        body.dark-mode #quizDetailsContainer {
+            background: #333;
+            color: #e0e0e0;
+            border-left-color: #ffd700;
+        }
+
+        body.dark-mode #detailsList h4 {
+            color: #ffd700;
+        }
+
+        body.dark-mode .quiz-intro {
+            background: linear-gradient(135deg, #b8860b 0%, #333333 100%);
+        }
+
+        body.dark-mode .profile-banner {
+            background: linear-gradient(135deg, #b8860b 0%, #333333 100%);
+        }
+
+        body.dark-mode .dashboard-btn {
+            background: #3a3a3a;
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        body.dark-mode .dashboard-btn:hover {
+            background: #ffd700;
+            color: #000;
+        }
+
+        body.dark-mode #dailyChallengeSection {
+            background: #2c2c00 !important;
+        }
+
+        body.dark-mode #dailyChallengeSection h3 {
+            color: #ffd700 !important;
+        }
+
+        body.dark-mode #dailyChallengeSection p {
+            color: #b0b0b0 !important;
+        }
+
+        body.dark-mode #challangeStatus {
+            background: #3a3a3a !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode #achievementsSection {
+            background: #2c2c00 !important;
+        }
+
+        body.dark-mode #achievementsSection h3 {
+            color: #ffd700 !important;
+        }
+
+        body.dark-mode .achievement-badge {
+            background: #3a3a3a;
+            color: #ffd700;
+            border-color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .user-info {
+                text-align: left;
+            }
+
+            .quiz-select {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                flex-wrap: wrap;
+            }
+
+            .nav-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>� Quirino High School</h1>
+            <div class="user-info">
+                <p>Welcome, <span id="userName">Guest</span>! 
+                    <span id="streakBadge" style="margin-left: 10px; font-weight: bold; color: #ff6600;">0 🔥</span>
+                </p>
+
+                <button class="logout-btn" onclick="openLeaderboard()" style="background: #ffd700; color: #333; margin-right: 5px;">🏆 Leaderboard</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+                <button class="secret-btn" onclick="accessSecret()" title="My Profile">👤</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <div class="profile-banner">
+                <h2>Welcome, <span id="userNameBanner">Guest</span>! 👋</h2>
+                <p id="userEmailBanner">Your Personal Learning Dashboard</p>
+            </div>
+
+            <div class="dashboard-menu">
+                <button class="dashboard-btn" onclick="showQuizzes()">
+                    📚<br>Quizzes
+                </button>
+                <button class="dashboard-btn" onclick="showGames()">
+                    🎮<br>Games
+                </button>
+                <button class="dashboard-btn" onclick="showDailyChallenge()">
+                    ⚡<br>Daily Challenge
+                </button>
+                <button class="dashboard-btn" onclick="showAchievements()">
+                    🏅<br>Achievements
+                </button>
+            </div>
+
+            <!-- Daily Challenge Section -->
+            <div id="dailyChallengeSection" style="display: none; background: #fff9e6; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #ffd700;">
+                <h3 style="color: #333; margin-bottom: 10px;">⚡ Today's Challenge</h3>
+                <p style="color: #666; margin-bottom: 10px;">Score 80% or higher on any quiz to complete today's challenge!</p>
+                <div id="challangeStatus" style="background: white; padding: 10px; border-radius: 5px; color: #333;">Challenge not completed yet. Take a quiz to complete it!</div>
+            </div>
+
+            <!-- Achievements Section -->
+            <div id="achievementsSection" style="display: none; background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #800000;">
+                <h3 style="color: #333; margin-bottom: 15px;">🏅 Your Achievements</h3>
+                <div id="achievementsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
+                    <div style="background: white; padding: 15px; border-radius: 5px; text-align: center; opacity: 0.5;">
+                        <div style="font-size: 30px; margin-bottom: 5px;">⭐</div>
+                        <div style="font-size: 12px; color: #666;">Quiz Star</div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 5px; text-align: center; opacity: 0.5;">
+                        <div style="font-size: 30px; margin-bottom: 5px;">🚀</div>
+                        <div style="font-size: 12px; color: #666;">Speed Runner</div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 5px; text-align: center; opacity: 0.5;">
+                        <div style="font-size: 30px; margin-bottom: 5px;">🎯</div>
+                        <div style="font-size: 12px; color: #666;">Accuracy King</div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 5px; text-align: center; opacity: 0.5;">
+                        <div style="font-size: 30px; margin-bottom: 5px;">👑</div>
+                        <div style="font-size: 12px; color: #666;">Champion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Not Logged In Message -->
+        <div class="no-login" id="noLogin">
+            <h2>You need to be logged in to access the quiz</h2>
+            <p>Please sign in or create an account to continue.</p>
+            <a href="login.html">Go to Login</a>
+        </div>
+
+        <!-- Quiz Selection -->
+        <div id="quizSelection">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #333; margin: 0;">Select a Quiz Category</h2>
+                <button class="nav-btn prev-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+            </div>
+            <div class="quiz-select">
+                <button class="quiz-option" onclick="startQuiz('fundamentals')">
+                    📱 ICT Fundamentals
+                </button>
+                <button class="quiz-option" onclick="startQuiz('hardware')">
+                    🖥️ Hardware & Devices
+                </button>
+                <button class="quiz-option" onclick="startQuiz('networking')">
+                    🌐 Networking & Internet
+                </button>
+                <button class="quiz-option" onclick="startQuiz('cybersecurity')">
+                    🔒 Cybersecurity
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div class="quiz-container" id="quizContainer">
+            <!-- Quiz Intro -->
+            <div class="quiz-intro" id="quizIntro">
+                <h3 id="quizCategoryTitle"></h3>
+                <p id="quizDescription"></p>
+                <button class="results-button" onclick="beginQuiz()">Start Quiz</button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-info">
+                    <span id="questionNumber">Question 1 of 10</span>
+                    <span id="timer">Time: 0s</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container" id="questionContainer" style="display: none;">
+                <div class="question-title" id="questionTitle"></div>
+                <div class="options" id="optionsContainer"></div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation" id="navigationContainer" style="display: none;">
+                <button class="nav-btn prev-btn" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="nav-btn next-btn" onclick="nextQuestion()" id="nextBtn">Next →</button>
+                <button class="nav-btn submit-btn" onclick="submitQuiz()" id="submitBtn" style="display: none;">Submit Quiz</button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-container" id="resultsContainer">
+            <h2>Quiz Completed!</h2>
+            <div class="score-display" id="scoreDisplay">0/0</div>
+            <div class="results-details">
+                <p id="scorePercentage">0%</p>
+                <p id="performanceMessage"></p>
+                <p id="resultsSummary"></p>
+            </div>
+            <button class="results-button" onclick="viewQuizDetails()">View Details</button>
+            <button class="results-button" onclick="returnToSelection()">Take Another Quiz</button>
+        </div>
+
+        <!-- Quiz Details -->
+        <div id="quizDetailsContainer" style="display: none; text-align: left;">
+            <h3 style="margin-bottom: 20px; text-align: center;">Quiz Details</h3>
+            <div id="detailsList"></div>
+            <button class="results-button" onclick="backToResults()" style="width: 100%; margin-top: 20px;">← Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        // Apply saved theme immediately on page load
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+    <script src="quiz.js"></script>
+</body>
+</html>

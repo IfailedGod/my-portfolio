@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quirino High School - ICT Learning Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .homepage {
+            display: block;
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+
+        .homepage.hidden {
+            display: none;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 52px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .description {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #800000;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .quiz-categories {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .quiz-categories h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .category-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .category-item:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Login Form Styles */
+        .login-section {
+            display: none;
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-section.active {
+            display: block;
+        }
+
+        .login-section h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #800000;
+            box-shadow: 0 0 5px rgba(128, 0, 0, 0.3);
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #800000 0%, #000000 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .form-group button:hover {
+            transform: translateY(-2px);
+        }
+
+        .error {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .success {
+            color: #388e3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success.show {
+            display: block;
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .toggle-link a {
+            color: #800000;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #999 !important;
+            color: white !important;
+            margin-top: 20px;
+            display: inline-block;
+            width: auto;
+        }
+
+        .back-button:hover {
+            background: #666 !important;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Homepage Section -->
+    <div class="homepage" id="homepage">
+        <div class="logo">
+            <img src="QHS-removebg-preview.png" alt="Quirino High School Logo" onerror="this.style.display='none'">
+        </div>
+        <h1>Quirino High School</h1>
+        <p class="subtitle">Excellence in Education & Technology</p>
+        
+        <p class="description">
+            Welcome to Quirino High School's ICT Learning Platform. Master Information and Communication Technology with interactive quizzes, engaging games, and comprehensive learning resources designed for students at all levels.
+        </p>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🎓</div>
+                <h3>Quality Education</h3>
+                <p>Comprehensive ICT curriculum designed for academic excellence.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💡</div>
+                <h3>Interactive Learning</h3>
+                <p>Engage with quizzes, games, and practical exercises to master ICT skills.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <h3>Future Ready</h3>
+                <p>Prepare for a technology-driven world with modern ICT knowledge.</p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="showLogin()">Get Started</button>
+            <button class="btn btn-secondary" onclick="showLogin()">Login</button>
+        </div>
+
+        <div class="quiz-categories">
+            <h3>About Quirino High School</h3>
+            <div class="category-list">
+                <div class="category-item">✓ Established institution of excellence</div>
+                <div class="category-item">✓ Modern ICT facilities and labs</div>
+                <div class="category-item">✓ Experienced and dedicated educators</div>
+                <div class="category-item">✓ Committed to student success and innovation</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div class="login-section" id="loginSection">
+        <!-- Sign In Form -->
+        <div id="signInForm">
+            <h2>Sign In</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    <div class="error" id="loginEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    <div class="error" id="loginPasswordError"></div>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Sign In</button>
+                </div>
+                <div class="error" id="loginError"></div>
+                <div class="success" id="loginSuccess"></div>
+            </form>
+            <div class="toggle-link">
+                Don't have an account? <a onclick="toggleForm()">Sign Up</a>
+            </div>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div id="signUpForm" style="display: none;">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                    <div class="error" id="signupNameError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                    <div class="error" id="signupEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Enter a password" required>
+                    <div class="error" id="signupPasswordError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                    <div class="error" id="signupConfirmPasswordError"></div>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Sign Up</button>
+                </div>
+                <div class="error" id="signupError"></div>
+                <div class="success" id="signupSuccess"></div>
+            </form>
+            <div class="toggle-link">
+                Already have an account? <a onclick="toggleForm()">Sign In</a>
+            </div>
+        </div>
+
+        <button class="btn back-button" onclick="hideLogin()">← Back to Home</button>
+    </div>
+
+    <script src="login.js"></script>
+    <script>
+        // Show login form
+        function showLogin() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('loginSection').classList.add('active');
+        }
+
+        // Hide login form
+        function hideLogin() {
+            document.getElementById('homepage').classList.remove('hidden');
+            document.getElementById('loginSection').classList.remove('active');
+            clearAllErrors();
+        }
+
+        // Toggle between Sign In and Sign Up
+        function toggleForm() {
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+
+            signInForm.style.display = signInForm.style.display === 'none' ? 'block' : 'none';
+            signUpForm.style.display = signUpForm.style.display === 'none' ? 'block' : 'none';
+
+            clearAllErrors();
+        }
+
+        // Clear all errors
+        function clearAllErrors() {
+            document.querySelectorAll('.error, .success').forEach(el => {
+                el.textContent = '';
+                el.classList.remove('show');
+            });
+        }
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = 'quiz.html';
+            }
+        });
+    </script>
+</body>
+</html>

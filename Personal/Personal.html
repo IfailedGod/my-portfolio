@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jaime Galinato • My Story</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --accent: #60a5fa;
+      --accent-soft: #93c5fd;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --glow: rgba(96, 165, 250, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      min-height: 100vh;
+      padding: 3rem 1rem 4rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    h1 {
+      font-size: 3.4rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #60a5fa, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      color: #94a3b8;
+      max-width: 700px;
+      margin: 0 auto 1rem;
+    }
+
+    .content {
+      max-width: 920px;
+      margin: 0 auto;
+      background: var(--surface);
+      padding: 2.8rem;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px var(--shadow);
+      border: 1px solid #334155;
+    }
+
+    p {
+      margin-bottom: 1.8rem;
+      font-size: 1.15rem;
+      color: #cbd5e1;
+    }
+
+    .photo {
+      width: 100%;
+      max-width: 380px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px var(--shadow);
+      margin: 1.5rem auto;
+      display: block;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .photo.left {
+      float: left;
+      margin: 0 2rem 1.5rem 0;
+    }
+
+    .photo.right {
+      float: right;
+      margin: 0 0 1.5rem 2rem;
+    }
+
+    .photo:hover {
+      transform: scale(1.04);
+      box-shadow: 0 20px 50px var(--shadow),
+                  0 0 0 6px var(--glow);
+    }
+
+    .gallery-btn {
+      display: block;
+      width: fit-content;
+      margin: 3rem auto 1rem;
+      padding: 1rem 2.2rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 50px;
+      box-shadow: 0 6px 20px rgba(96, 165, 250, 0.3);
+      transition: all 0.35s ease;
+    }
+
+    .gallery-btn:hover {
+      background: #3b82f6;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 5rem;
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .photo.left, .photo.right {
+        float: none;
+        margin: 2rem auto;
+        max-width: 90%;
+      }
+
+      h1 { font-size: 2.6rem; }
+      .content { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Jaime Galinato</h1>
+    <p class="subtitle">A story of roots, resilience, and quiet growth</p>
+  </header>
+
+  <div class="content">
+
+    <img src="img (16).jpg" alt="Early days" class="photo left" loading="lazy">
+
+    <p>I was born in Quezon City, but when I was around 3 years old, my grandmother brought me to live with her in Cagayan. That period in my life holds a strong sense of nostalgia, even though the circumstances were difficult. At the time, my family was struggling financially, and we were left with almost nothing. My grandmother stepped in to raise me, offering the care and stability my parents couldn't provide back then.</p>
+
+    <p>I grew up in her home for a few years, away from my siblings. I have three siblings: an older sister, a younger brother, and another I didn’t really get to know until I was seven. Meeting them again after years apart felt strange but comforting. In time, my parents managed to recover from the worst of our financial hardships. Things are still not perfect, but we are now in a place where we can get by without much worry. That early chapter in my life taught me the importance of resilience and family support.</p>
+
+    <img src="img (17).jpg" alt="Quezon City return" class="photo right" loading="lazy">
+
+    <p>I returned to Quezon City and began school. I remember my first day being fairly average—not too bad and not too good. I was never bullied in school, though like many students, I did face a few insults now and then. It wasn’t something that deeply affected me, but it did add to my natural shyness. In Years 8 and 9, I struggled with public speaking due to anxiety and fear of embarrassment. I constantly worried that if I made mistakes during presentations or answered questions incorrectly, I would be judged.</p>
+
+    <p>However, by Year 10, I began to build confidence as I realised that I needed to grow for the sake of my future. I also became more at ease because of the friends I had made along the way. They helped me feel supported and comfortable being myself. Around the same time, I had started saving money to buy a bicycle. By Year 9, I was able to purchase one, and it turned out to be a great decision for both commuting and building my endurance.</p>
+
+    <img src="img (2).jpg" alt="Bicycle days" class="photo left" loading="lazy">
+
+    <p>Choosing the ICT strand was a deliberate decision for me, mainly because I wanted to step away from constant physical activities. My daily routines involve a lot of movement, and I thought it would be nice to sit down, focus, and work with technology instead. ICT seemed like a practical and relaxing change, at least for now. The lessons are relatively easy at the moment, but I know that eventually, the workload and difficulty will increase. I'm mentally preparing myself for the challenges ahead because I know it will all be worth it.</p>
+
+    <img src="img (19).jpg" alt="Current chapter" class="photo right" loading="lazy">
+
+    <p>My hobbies are varied, although I wouldn't say I excel at most of them just yet. They tend to require both time and money, two things I don’t always have. Currently, I enjoy cycling the most, especially because it keeps me active and helps clear my mind. I also spend time exploring new knowledge and learning skills to improve myself. Moving forward, I want to keep developing and become someone capable, adaptable, and ready for whatever comes next.</p>
+
+    <a href="Personal_Album.html" class="gallery-btn">See More Pictures →</a>
+
+  </div>
+
+  <footer>
+    <p>Just a chapter in progress • Quezon City • 2026</p>
+  </footer>
+
+</body>
+</html>

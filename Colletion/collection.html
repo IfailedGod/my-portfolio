@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jaime's Collection • Active Life & Memories</title>
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --accent: #3498db;
+      --light: #ecf0f1;
+      --gray: #7f8c8d;
+      --gap: 2rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacOSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--light);
+      color: var(--primary);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .intro-link {
+      display: inline-block;
+      margin: 1rem 0 2rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--accent);
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .intro-link:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: var(--gap);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(185, 105, 105, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      object-fit: cover;
+    }
+
+    .gallery img:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .content {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+
+    .content p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    .content strong {
+      color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .gallery img {
+        width: calc(50% - 1rem);
+      }
+
+      .gallery img:nth-child(odd) {
+        margin-right: 1rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery img {
+        width: 100%;
+        margin-right: 0 !important;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .content {
+        padding: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Jazz's School Life</h1>
+    <a href="Collection_Album.html" class="intro-link">See Other Pictures →</a>
+  </header>
+
+  <main class="container">
+
+    <div class="gallery">
+      <img src="" alt="Volleyball Moment">
+      <img src="" alt="Active lifestyle">
+    </div>
+
+    <div class="content">
+      <p>I’ve always love staying physically active. Playing <strong>volleyball</strong> is my absolute favorite. There’s something special about the mix of endurance, focus, and pure zone thinking. Volleyball helped me a lot. I found friends, sense of freedom, and specially to have a strong mind.</p>
+
+      <p>Besides playing volleyball, <strong>drills</strong> is my go-to for building strength. I loved that it’s all about mastering your own body weight. Over time I’ve worked up  <strong>my contact</strong> and <strong>my reaction speed increase and I lose a lot of weight</strong> — it’s tougher than it sounds!</p>
+
+      <p>I also do individual sports, even if they’re not my main thing. Those shared moments build real connections and great memories.</p>
+
+      <p>Good <strong>nutrition</strong> matters too. After a long play or drills. I focus on balanced recovery meals that fuel me right and keep my energy up. Food is fuel, but it’s also part of feeling good overall.</p>
+    </div>
+
+
+    <div class="gallery">
+      <img src="" alt="Group activity">
+      <img src="" alt="Fitness progress">
+      <img src="" alt="Outdoor vibes">
+      <img src="" alt="Strong moments">
+    </div>
+  </main>
+
+  <footer style="text-align:center; margin-top:3rem; color:#777; font-size:0.95rem;">
+    <p>Thanks for checking out my page • Made with ❤️ by Jazz</p>
+  </footer>
+
+</body>
+</html>
